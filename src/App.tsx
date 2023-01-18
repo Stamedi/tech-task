@@ -1,56 +1,63 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
+import Home from './components/Home';
+import MobileImages from './components/MobileImages';
+import DesktopImages from './components/DesktopImages';
+// @ts-ignore
+import { saveAs } from 'file-saver';
+import './App.scss';
 
 function App() {
+  const [data, setData] = useState<any[]>([]);
+  const [pagination, setPagination] = useState(12);
+
+  const handleClick = (url: string, id: number) => {
+    saveAs(url, id);
+  };
+
+  const handlePagination = () => {
+    setPagination(pagination + 12);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`https://api.pexels.com/v1/curated?per_page=${pagination}&page=1`, {
+        method: 'GET',
+        headers: {
+          Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+        },
+      });
+      const data = await response.json();
+      const photos = data.photos;
+      console.log(data);
+      setData(photos);
+    };
+    fetchData();
+  }, [pagination]);
+  // useEffect(() => {
+  //   const desktopImg = 'desktop backgrounds';
+  //   const fetchData = async () => {
+  //     const response = await fetch(`https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape`, {
+  //       method: 'GET',
+  //       headers: {
+  //         Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     const photos = data.photos;
+  //     console.log(data);
+  //     setData(photos);
+  //   };
+  //   fetchData();
+  // }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div className="app-container">
+      <Nav />
+      <Home data={data} handleClick={handleClick} handlePagination={handlePagination} />
+      <MobileImages />
+      <DesktopImages />
+      <Footer />
     </div>
   );
 }
