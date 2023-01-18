@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import Home from './components/Home';
@@ -12,7 +13,7 @@ function App() {
   const [data, setData] = useState<any[]>([]);
   const [pagination, setPagination] = useState(12);
 
-  const handleClick = (url: string, id: number) => {
+  const handleClick = (url: string, id: string) => {
     saveAs(url, id);
   };
 
@@ -54,9 +55,12 @@ function App() {
   return (
     <div className="app-container">
       <Nav />
-      <Home data={data} handleClick={handleClick} handlePagination={handlePagination} />
-      <MobileImages />
-      <DesktopImages />
+      <Routes>
+        <Route path="/" element={<Home data={data} handleClick={handleClick} handlePagination={handlePagination} />} />
+        <Route path="/mobile-images" element={<MobileImages />} />
+        <Route path="/desktop-images" element={<DesktopImages />} />
+        {/* <Route path="*" element={<NoPage />} /> */}
+      </Routes>
       <Footer />
     </div>
   );
