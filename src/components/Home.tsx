@@ -25,7 +25,7 @@ const Home = ({ data, handleClick, handlePagination }: any) => {
                 <p>
                   Taken by <a href={photo.photographer_url}>{photo.photographer}</a>
                 </p>
-                <button onClick={() => handleClick(photo.src.original, photo.id)}>Download image</button>
+                <button onClick={() => handleClick(photo.src.original, photo.id)}>Download Image</button>
               </div>
             </div>
           )
