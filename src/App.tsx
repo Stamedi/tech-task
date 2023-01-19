@@ -11,6 +11,8 @@ import './App.scss';
 
 function App() {
   const [data, setData] = useState<any[]>([]);
+  const [mobileData, setMobileData] = useState<any[]>([]);
+  const [desktopData, setDesktopData] = useState<any[]>([]);
   const [pagination, setPagination] = useState(12);
 
   const handleClick = (url: string, id: string) => {
@@ -23,7 +25,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://api.pexels.com/v1/curated?per_page=${pagination}&page=1`, {
+      const response = await fetch(`https://api.pexels.com/v1/curated?per_page=${pagination}`, {
         method: 'GET',
         headers: {
           Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
@@ -31,34 +33,65 @@ function App() {
       });
       const data = await response.json();
       const photos = data.photos;
-      console.log(data);
       setData(photos);
     };
     fetchData();
   }, [pagination]);
-  // useEffect(() => {
-  //   const desktopImg = 'desktop backgrounds';
-  //   const fetchData = async () => {
-  //     const response = await fetch(`https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape`, {
-  //       method: 'GET',
-  //       headers: {
-  //         Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
-  //       },
-  //     });
-  //     const data = await response.json();
-  //     const photos = data.photos;
-  //     console.log(data);
-  //     setData(photos);
-  //   };
-  //   fetchData();
-  // }, []);
+
+  useEffect(() => {
+    const mobileImg = 'mobile wallpaper';
+    const fetchData = async () => {
+      const response = await fetch(
+        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&per_page=${pagination}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+          },
+        }
+      );
+      const data = await response.json();
+      const photos = data.photos;
+      setMobileData(photos);
+    };
+    fetchData();
+  }, [pagination]);
+
+  useEffect(() => {
+    const desktopImg = 'desktop backgrounds';
+    const fetchData = async () => {
+      const response = await fetch(
+        `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&per_page=${pagination}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+          },
+        }
+      );
+      const data = await response.json();
+      const photos = data.photos;
+      setDesktopData(photos);
+    };
+    fetchData();
+  }, [pagination]);
   return (
     <div className="app-container">
       <Nav />
       <Routes>
         <Route path="/" element={<Home data={data} handleClick={handleClick} handlePagination={handlePagination} />} />
-        <Route path="/mobile-images" element={<MobileImages />} />
-        <Route path="/desktop-images" element={<DesktopImages />} />
+        <Route
+          path="/mobile-images"
+          element={
+            <MobileImages mobileData={mobileData} handlePagination={handlePagination} handleClick={handleClick} />
+          }
+        />
+        <Route
+          path="/desktop-images"
+          element={
+            <DesktopImages desktopData={desktopData} handlePagination={handlePagination} handleClick={handleClick} />
+          }
+        />
         {/* <Route path="*" element={<NoPage />} /> */}
       </Routes>
       <Footer />
