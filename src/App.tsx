@@ -5,14 +5,18 @@ import Footer from './components/Footer';
 import Home from './components/Home';
 import MobileImages from './components/MobileImages';
 import DesktopImages from './components/DesktopImages';
+import ReplayIcon from '@mui/icons-material/Replay';
 // @ts-ignore
 import { saveAs } from 'file-saver';
 import './App.scss';
 
 function App() {
-  const [data, setData] = useState<any[]>([]);
-  const [mobileData, setMobileData] = useState<any[]>([]);
-  const [desktopData, setDesktopData] = useState<any[]>([]);
+  const [homeImages, setHomeImages] = useState<any[]>([]);
+  const [joke, setJoke] = useState<any>({});
+  const [reloadJoke, setReloadJoke] = useState(false);
+  // const [currentPage, setCurrentPage] = useState('');
+  const [mobileImages, setMobileImages] = useState<any[]>([]);
+  const [desktopImages, setDesktopImages] = useState<any[]>([]);
   const [pagination, setPagination] = useState(12);
 
   const handleClick = (url: string, id: string) => {
@@ -22,6 +26,10 @@ function App() {
   const handlePagination = () => {
     setPagination(pagination + 12);
   };
+
+  // const handleCurrentPageVal = (navVal: string) => {
+  //   setCurrentPage(navVal);
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +41,7 @@ function App() {
       });
       const data = await response.json();
       const photos = data.photos;
-      setData(photos);
+      setHomeImages(photos);
     };
     fetchData();
   }, [pagination]);
@@ -52,7 +60,8 @@ function App() {
       );
       const data = await response.json();
       const photos = data.photos;
-      setMobileData(photos);
+
+      setMobileImages(photos);
     };
     fetchData();
   }, [pagination]);
@@ -71,25 +80,51 @@ function App() {
       );
       const data = await response.json();
       const photos = data.photos;
-      setDesktopData(photos);
+      setDesktopImages(photos);
     };
     fetchData();
   }, [pagination]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('https://official-joke-api.appspot.com/random_joke');
+      const data = await response.json();
+      setJoke(data);
+    };
+    fetchData();
+  }, [reloadJoke]);
   return (
     <div className="app-container">
       <Nav />
+      <div className="joke-container">
+        <h1>Random jokes to boost the day:</h1>
+        <div className="joke-text-container">
+          <h3>{joke.setup}</h3>
+          <h2>{joke.punchline}</h2>
+        </div>
+        <button onClick={() => setReloadJoke(!reloadJoke)}>
+          <ReplayIcon />
+        </button>
+      </div>
       <Routes>
-        <Route path="/" element={<Home data={data} handleClick={handleClick} handlePagination={handlePagination} />} />
+        <Route
+          path="/"
+          element={<Home homeImages={homeImages} handleClick={handleClick} handlePagination={handlePagination} />}
+        />
         <Route
           path="/mobile-images"
           element={
-            <MobileImages mobileData={mobileData} handlePagination={handlePagination} handleClick={handleClick} />
+            <MobileImages mobileImages={mobileImages} handlePagination={handlePagination} handleClick={handleClick} />
           }
         />
         <Route
           path="/desktop-images"
           element={
-            <DesktopImages desktopData={desktopData} handlePagination={handlePagination} handleClick={handleClick} />
+            <DesktopImages
+              desktopImages={desktopImages}
+              handlePagination={handlePagination}
+              handleClick={handleClick}
+            />
           }
         />
         {/* <Route path="*" element={<NoPage />} /> */}

@@ -4,6 +4,29 @@
   margin: auto;
   text-align: center;
 }
+.joke-container {
+  button {
+    border: none;
+    height: 50px;
+    width: 50px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid #574c4e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #574c4e;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.joke-text-container {
+  display: flex;
+  flex-direction: column;
+}
 
 .photo-container {
   display: flex;
@@ -13,7 +36,7 @@
 
 .single-photo-container {
   border: 2px solid #574c4e;
-  width: 250px;
+  width: 300px;
   height: auto;
   border-radius: 5px;
   padding: 15px;
@@ -35,7 +58,7 @@
 .card-text-container {
   display: flex;
   flex-direction: column;
-  // align-items: center;
+  align-items: center;
   justify-content: center;
 
   p {
@@ -52,5 +75,23 @@
     background-color: #eeefea;
     border-radius: 40px;
     cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
   }
+}
+
+.load-more-btn {
+  background-color: #eeefea;
+  border: none;
+  height: 40px;
+  width: 50%;
+  border-radius: 20px;
+  cursor: pointer;
+  color: #574c4e;
+  margin-top: 20px;
+  font-weight: bold;
+  border: 2px solid #574c4e;
 }

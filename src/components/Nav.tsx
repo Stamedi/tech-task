@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PhotoSizeSelectActualOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActualOutlined';
 import '../styles/Nav.scss';
 
@@ -7,23 +7,23 @@ const Nav = () => {
     <nav>
       <div className="logo-container">
         <h3>GET</h3>
-        <PhotoSizeSelectActualOutlinedIcon style={{ height: 'auto', width: '4logo-container0px' }} />
+        <PhotoSizeSelectActualOutlinedIcon style={{ height: 'auto', width: '75px' }} />
       </div>
       <ul className="pages-container">
         <li>
-          <Link to="/" className="nav-link">
+          <NavLink to="/" className="nav-link">
             <span>Newest</span> <PhotoSizeSelectActualOutlinedIcon />
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/mobile-images" className="nav-link">
+          <NavLink to="/mobile-images" className="nav-link">
             <span>Mobile</span> <PhotoSizeSelectActualOutlinedIcon />
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/desktop-images" className="nav-link">
+          <NavLink to="/desktop-images" className="nav-link">
             <span>Desktop</span> <PhotoSizeSelectActualOutlinedIcon />
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>
