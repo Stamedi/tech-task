@@ -43,6 +43,10 @@ nav {
   align-items: center;
   color: #eeefea;
   text-decoration: none;
+  transition: 0.3s ease-in-out;
+  &:hover {
+    color: #fad2d1;
+  }
   span {
     padding-right: 6px;
   }

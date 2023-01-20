@@ -103,6 +103,7 @@ function App() {
           <h2>{joke.punchline}</h2>
         </div>
         <button onClick={() => setReloadJoke(!reloadJoke)}>
+          New Joke
           <ReplayIcon />
         </button>
       </div>
