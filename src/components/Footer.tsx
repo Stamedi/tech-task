@@ -6,9 +6,15 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 const Footer = () => {
   return (
     <footer>
-      <YouTubeIcon style={{ width: '100px', height: 'auto' }} />
-      <InstagramIcon style={{ width: '100px', height: 'auto' }} />
-      <FacebookIcon style={{ width: '100px', height: 'auto' }} />
+      <a href="https://www.youtube.com/">
+        <YouTubeIcon style={{ width: '100px', height: 'auto' }} />
+      </a>
+      <a href="https://www.instagram.com/">
+        <InstagramIcon style={{ width: '100px', height: 'auto' }} />
+      </a>
+      <a href="https://www.facebook.com/">
+        <FacebookIcon style={{ width: '100px', height: 'auto' }} />
+      </a>
     </footer>
   );
 };

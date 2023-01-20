@@ -7,11 +7,19 @@
     width: 100%;
   }
 }
+
+.home-p {
+  font-size: 20px;
+  max-width: 800px;
+  display: flex;
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
 .joke-container {
   button {
     border: none;
-    // height: 50px;
-    // width: 50px;
     font-weight: 600;
     font-size: 15px;
     padding: 15px;
@@ -26,21 +34,34 @@
       cursor: pointer;
     }
   }
+  h1 {
+    font-size: 30px;
+    margin-top: 0;
+  }
+  h3 {
+    margin-top: 0;
+  }
+  h2 {
+    margin-top: 0;
+  }
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  flex-wrap: wrap;
+  border: 2px solid #574c4e;
+  max-width: 500px;
+  margin: auto;
+  margin-top: 60px;
+  left: 0;
+  right: 0;
+  padding: 15px;
 }
-
-.joke-text-container {
-  display: flex;
-  flex-direction: column;
-}
-
 .photo-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: 30px;
 }
 
 .single-photo-container {
