@@ -17,14 +17,14 @@ function App() {
   // const [currentPage, setCurrentPage] = useState('');
   const [mobileImages, setMobileImages] = useState<any[]>([]);
   const [desktopImages, setDesktopImages] = useState<any[]>([]);
-  const [pagination, setPagination] = useState(12);
+  const [loadMore, setLoadMore] = useState(12);
 
   const handleClick = (url: string, id: string) => {
     saveAs(url, id);
   };
 
   const handlePagination = () => {
-    setPagination(pagination + 12);
+    setLoadMore(loadMore + 12);
   };
 
   // const handleCurrentPageVal = (navVal: string) => {
@@ -33,7 +33,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://api.pexels.com/v1/curated?per_page=${pagination}`, {
+      const response = await fetch(`https://api.pexels.com/v1/curated?per_page=${loadMore}`, {
         method: 'GET',
         headers: {
           Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
@@ -44,13 +44,13 @@ function App() {
       setHomeImages(photos);
     };
     fetchData();
-  }, [pagination]);
+  }, [loadMore]);
 
   useEffect(() => {
     const mobileImg = 'mobile wallpaper';
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&per_page=${pagination}`,
+        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&per_page=${loadMore}`,
         {
           method: 'GET',
           headers: {
@@ -64,13 +64,13 @@ function App() {
       setMobileImages(photos);
     };
     fetchData();
-  }, [pagination]);
+  }, [loadMore]);
 
   useEffect(() => {
     const desktopImg = 'desktop backgrounds';
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&per_page=${pagination}`,
+        `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&per_page=${loadMore}`,
         {
           method: 'GET',
           headers: {
@@ -83,7 +83,7 @@ function App() {
       setDesktopImages(photos);
     };
     fetchData();
-  }, [pagination]);
+  }, [loadMore]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,7 +97,7 @@ function App() {
     <div className="app-container">
       <Nav />
       <div className="joke-container">
-        <h1>Random jokes to boost the day:</h1>
+        <h1>Random jokes to "boost the day":</h1>
         <div className="joke-text-container">
           <h3>{joke.setup}</h3>
           <h2>{joke.punchline}</h2>

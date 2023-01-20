@@ -11,17 +11,25 @@ const Nav = () => {
       </div>
       <ul className="pages-container">
         <li>
-          <NavLink to="/" className="nav-link">
+          <NavLink to="/" className="nav-link" style={({ isActive }) => (isActive ? { color: '#cb9190' } : undefined)}>
             <span>Newest</span> <PhotoSizeSelectActualOutlinedIcon />
           </NavLink>
         </li>
         <li>
-          <NavLink to="/mobile-images" className="nav-link">
+          <NavLink
+            to="/mobile-images"
+            className="nav-link"
+            style={({ isActive }) => (isActive ? { color: '#cb9190' } : undefined)}
+          >
             <span>Mobile</span> <PhotoSizeSelectActualOutlinedIcon />
           </NavLink>
         </li>
         <li>
-          <NavLink to="/desktop-images" className="nav-link">
+          <NavLink
+            to="/desktop-images"
+            className="nav-link"
+            style={({ isActive }) => (isActive ? { color: '#cb9190' } : undefined)}
+          >
             <span>Desktop</span> <PhotoSizeSelectActualOutlinedIcon />
           </NavLink>
         </li>

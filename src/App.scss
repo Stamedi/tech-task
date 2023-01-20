@@ -3,6 +3,9 @@
   height: auto;
   margin: auto;
   text-align: center;
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
 }
 .joke-container {
   button {
@@ -84,7 +87,7 @@
 }
 
 .load-more-btn {
-  background-color: #eeefea;
+  // background-color: #eeefea;
   border: none;
   height: 40px;
   width: 50%;
