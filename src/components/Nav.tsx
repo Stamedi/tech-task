@@ -1,20 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Box,
-  Container,
-  styled,
-  Drawer,
-  List,
-  ListItem,
-  Divider,
-  ListItemButton,
-  ListItemText,
-} from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Box, styled, Drawer, Divider } from '@mui/material';
 import PhotoSizeSelectActualOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActualOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import '../styles/Nav.scss';
@@ -39,21 +25,27 @@ const Nav = () => {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+      <Typography display="flex" alignItems="center" justifyContent="center" variant="h6" sx={{ my: 2 }}>
+        GET
+        <PhotoSizeSelectActualOutlinedIcon style={{ height: 'auto' }} />
       </Typography>
       <Divider />
-      <List>
+      <Box sx={{ display: { display: 'flex', alignItems: 'center', flexDirection: 'column' } }}>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
+          <IconButton key={item}>
+            <NavLink
+              to={item.toLowerCase() === 'newest' ? '/' : `/${item.toLowerCase()}`}
+              className="nav-link"
+              style={({ isActive }) => (isActive ? { color: '#cb9190' } : { color: '#574c4e' })}
+            >
+              <Typography pr={1}>{item}</Typography> <PhotoSizeSelectActualOutlinedIcon />
+            </NavLink>
+          </IconButton>
         ))}
-      </List>
+      </Box>
     </Box>
   );
+
   return (
     <Box>
       <AppBar position="static" sx={{ background: '#574c4e', display: 'flex' }} component="nav">
@@ -76,33 +68,17 @@ const Nav = () => {
             <PhotoSizeSelectActualOutlinedIcon style={{ height: 'auto', width: '75px' }} />
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'flex', alignItems: 'center' } }}>
-            <StyledIconButton>
-              <NavLink
-                to="/"
-                className="nav-link"
-                style={({ isActive }) => (isActive ? { color: '#cb9190' } : undefined)}
-              >
-                <Typography pr={1}>Newest</Typography> <PhotoSizeSelectActualOutlinedIcon />
-              </NavLink>
-            </StyledIconButton>
-            <StyledIconButton>
-              <NavLink
-                to="/mobile-images"
-                className="nav-link"
-                style={({ isActive }) => (isActive ? { color: '#cb9190' } : undefined)}
-              >
-                <Typography pr={1}>Mobile</Typography> <PhotoSizeSelectActualOutlinedIcon />
-              </NavLink>
-            </StyledIconButton>
-            <StyledIconButton>
-              <NavLink
-                to="/desktop-images"
-                className="nav-link"
-                style={({ isActive }) => (isActive ? { color: '#cb9190' } : undefined)}
-              >
-                <Typography pr={1}>Desktop</Typography> <PhotoSizeSelectActualOutlinedIcon />
-              </NavLink>
-            </StyledIconButton>
+            {navItems.map((item) => (
+              <StyledIconButton key={item}>
+                <NavLink
+                  to={item.toLowerCase() === 'newest' ? '/' : `/${item.toLowerCase()}`}
+                  className="nav-link"
+                  style={({ isActive }) => (isActive ? { color: '#cb9190' } : undefined)}
+                >
+                  <Typography pr={1}>{item}</Typography> <PhotoSizeSelectActualOutlinedIcon />
+                </NavLink>
+              </StyledIconButton>
+            ))}
           </Box>
         </StyledToolbar>
       </AppBar>
@@ -112,7 +88,7 @@ const Nav = () => {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },

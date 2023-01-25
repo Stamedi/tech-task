@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
@@ -47,58 +47,58 @@ function App() {
     setReloadJoke(!reloadJoke);
   };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await fetch(`https://api.pexels.com/v1/curated?per_page=${loadMore}`, {
-  //       method: 'GET',
-  //       headers: {
-  //         Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
-  //       },
-  //     });
-  //     const data: { photos: Image[] } = await response.json();
-  //     const photos = data.photos;
-  //     setHomeImages(photos);
-  //   };
-  //   fetchData();
-  // }, [loadMore]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`https://api.pexels.com/v1/curated?per_page=${loadMore}`, {
+        method: 'GET',
+        headers: {
+          Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+        },
+      });
+      const data: { photos: Image[] } = await response.json();
+      const photos = data.photos;
+      setHomeImages(photos);
+    };
+    fetchData();
+  }, [loadMore]);
 
-  // useEffect(() => {
-  //   const mobileImg = 'mobile wallpaper';
-  //   const fetchData = async () => {
-  //     const response = await fetch(
-  //       `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&per_page=${loadMore}`,
-  //       {
-  //         method: 'GET',
-  //         headers: {
-  //           Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
-  //         },
-  //       }
-  //     );
-  //     const data: { photos: Image[] } = await response.json();
-  //     const photos = data.photos;
-  //     setMobileImages(photos);
-  //   };
-  //   fetchData();
-  // }, [loadMore]);
+  useEffect(() => {
+    const mobileImg = 'mobile wallpaper';
+    const fetchData = async () => {
+      const response = await fetch(
+        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&per_page=${loadMore}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+          },
+        }
+      );
+      const data: { photos: Image[] } = await response.json();
+      const photos = data.photos;
+      setMobileImages(photos);
+    };
+    fetchData();
+  }, [loadMore]);
 
-  // useEffect(() => {
-  //   const desktopImg = 'desktop backgrounds';
-  //   const fetchData = async () => {
-  //     const response = await fetch(
-  //       `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&per_page=${loadMore}`,
-  //       {
-  //         method: 'GET',
-  //         headers: {
-  //           Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
-  //         },
-  //       }
-  //     );
-  //     const data: { photos: Image[] } = await response.json();
-  //     const photos = data.photos;
-  //     setDesktopImages(photos);
-  //   };
-  //   fetchData();
-  // }, [loadMore]);
+  useEffect(() => {
+    const desktopImg = 'desktop backgrounds';
+    const fetchData = async () => {
+      const response = await fetch(
+        `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&per_page=${loadMore}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+          },
+        }
+      );
+      const data: { photos: Image[] } = await response.json();
+      const photos = data.photos;
+      setDesktopImages(photos);
+    };
+    fetchData();
+  }, [loadMore]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -110,7 +110,7 @@ function App() {
     fetchData();
   }, [reloadJoke]);
   return (
-    <Container>
+    <Container sx={{ padding: 0 }}>
       <Nav />
       <Routes>
         <Route
@@ -126,7 +126,7 @@ function App() {
           }
         />
         <Route
-          path="/mobile-images"
+          path="/mobile"
           element={
             <MobileImages
               mobileImages={mobileImages}
@@ -138,7 +138,7 @@ function App() {
           }
         />
         <Route
-          path="/desktop-images"
+          path="/desktop"
           element={
             <DesktopImages
               desktopImages={desktopImages}

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Box, Card, styled, Button } from '@mui/material';
+import { Typography, Card, styled, Button } from '@mui/material';
 import ReplayIcon from '@mui/icons-material/Replay';
 
 const StyledCard = styled(Card)({

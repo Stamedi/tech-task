@@ -1,13 +1,14 @@
 import React from 'react';
 import Images from './Images';
 import Joke from './Joke';
+import { Typography, Box } from '@mui/material';
 const MobileImages = ({ mobileImages, handleClick, handlePagination, joke, handleJokes }: any) => {
   return (
-    <>
-      <h1>Wallpapers for Mobile Devices</h1>
+    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+      <Typography>Wallpapers for Mobile Devices</Typography>
       <Joke joke={joke} handleJokes={handleJokes} />
       <Images images={mobileImages} handleClick={handleClick} handlePagination={handlePagination} />
-    </>
+    </Box>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import DownloadIcon from '@mui/icons-material/Download';
-import { Grid, Card, CardMedia, CardContent, Typography, Link, Button, styled, Container } from '@mui/material';
+import { Grid, Card, CardMedia, CardContent, Typography, Link, Button, styled, Box } from '@mui/material';
 
 const CardStyled = styled(Card)({
   height: '100%',
@@ -60,7 +60,7 @@ type Image = {
 
 const Images = ({ images, handleClick, handlePagination }: any) => {
   return (
-    <Container>
+    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <Grid
         container
         rowSpacing={10}
@@ -102,7 +102,7 @@ const Images = ({ images, handleClick, handlePagination }: any) => {
         ))}
       </Grid>
       <LoadMoreButton onClick={() => handlePagination()}>Load More</LoadMoreButton>
-    </Container>
+    </Box>
   );
 };
 
