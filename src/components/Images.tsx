@@ -1,18 +1,51 @@
 import React from 'react';
 import DownloadIcon from '@mui/icons-material/Download';
-import {
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  IconButton,
-  CardActions,
-  Link,
-  Button,
-  // makeStyles,
-} from '@mui/material';
-// import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Card, CardMedia, CardContent, Typography, Link, Button, styled, Container } from '@mui/material';
+
+const CardStyled = styled(Card)({
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  backgroundColor: '#574c4e',
+  transition: '0.3s',
+  '&:hover': {
+    boxShadow: '0px 4px 8px rgba(38, 38, 38, 0.2)',
+    top: '-4px',
+    backgroundColor: '#665a5c',
+    cursor: 'pointer',
+  },
+});
+
+const DownloadButton = styled(Button)({
+  padding: '20px',
+  height: '20px',
+  color: '#574c4e',
+  backgroundColor: '#eeefea',
+  width: '75%',
+  marginBottom: '25px',
+  borderRadius: '40px',
+  border: '2px solid #eeefea',
+  '&:hover': {
+    backgroundColor: '#574c4e',
+    color: '#eeefea',
+  },
+});
+
+const LoadMoreButton = styled(Button)({
+  color: '#eeefea',
+  backgroundColor: '#574c4e',
+  width: '80%',
+  borderRadius: '40px',
+  border: '2px solid #574c4e',
+  display: 'flex',
+  justifyContent: 'center',
+  alignSelf: 'center',
+  '&:hover': {
+    color: '#574c4e',
+    backgroundColor: '#eeefea',
+  },
+});
 
 type Image = {
   id: number;
@@ -25,23 +58,9 @@ type Image = {
   alt: string;
 };
 
-// const useStyles = makeStyles({
-//   flexGrow: {
-//     flex: '1',
-//   },
-//   button: {
-//     backgroundColor: '#3c52b2',
-//     color: '#fff',
-//     '&:hover': {
-//       backgroundColor: '#fff',
-//       color: '#3c52b2',
-//     },
-//   },
-// });
-
 const Images = ({ images, handleClick, handlePagination }: any) => {
   return (
-    <div>
+    <Container>
       <Grid
         container
         rowSpacing={10}
@@ -53,66 +72,37 @@ const Images = ({ images, handleClick, handlePagination }: any) => {
       >
         {images.map((photo: Image) => (
           <Grid item key={photo.id} xl={4}>
-            <Card
-              sx={{ height: '100%', maxWidth: 400 }}
-              style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', backgroundColor: '#574c4e' }}
-              // className="card-content"
-            >
+            <CardStyled>
               <CardMedia
                 component="img"
                 image={photo.src.large}
                 alt={photo.alt}
-                style={{ display: 'flex', flexGrow: 1 }}
+                sx={{
+                  display: 'flex',
+                  flexGrow: 1,
+                }}
               />
               <CardContent>
-                <Typography style={{ padding: 0 }} variant="body2" color="#eeefea">
+                <Typography sx={{ padding: 0, color: '#eeefea' }} component="p" variant="h5">
                   Taken by{' '}
-                  <Link color="#ffe8e2" href={photo.photographer_url} variant="body2">
+                  <Link
+                    color="#ffe8e2"
+                    href={photo.photographer_url}
+                    sx={{ transition: '0.3s', '&:hover': { color: '#fefefe' } }}
+                  >
                     {photo.photographer}
                   </Link>
                 </Typography>
               </CardContent>
-              <CardActions style={{ padding: 0 }} onClick={() => handleClick(photo.src.original, photo.id)}>
-                <IconButton style={{ padding: 0 }}>
-                  <DownloadIcon style={{ color: '#eeefea', padding: '15px' }} />
-                </IconButton>
-              </CardActions>
-
-              {/* <div key={photo.id} className="single-photo-container">
-              <img src={photo.src.large} alt={photo.alt} />
-              <div className="card-text-container">
-                <p>
-                  Taken by <a href={photo.photographer_url}>{photo.photographer}</a>
-                </p>
-                <button onClick={() => handleClick(photo.src.original, photo.id)}>
-
-                </button>
-              </div>
-            </div> */}
-            </Card>
+              <DownloadButton onClick={() => handleClick(photo.src.original, photo.id)}>
+                <DownloadIcon />
+              </DownloadButton>
+            </CardStyled>
           </Grid>
-          // <div key={photo.id} className="single-photo-container">
-          //   <img src={photo.src.large} alt={photo.alt} />
-          //   <div className="card-text-container">
-          //     <p>
-          //       Taken by <a href={photo.photographer_url}>{photo.photographer}</a>
-          //     </p>
-          //     <button onClick={() => handleClick(photo.src.original, photo.id)}>
-          //       <DownloadIcon />
-          //     </button>
-          //   </div>
-          // </div>
         ))}
       </Grid>
-      <Button
-        variant="contained"
-        // className={classes.button}
-        // sx={{ color: '#eeefea', backgroundColor: '#574c4e', width: '80%', borderRadius: '40px' }}
-        onClick={() => handlePagination()}
-      >
-        Load More
-      </Button>
-    </div>
+      <LoadMoreButton onClick={() => handlePagination()}>Load More</LoadMoreButton>
+    </Container>
   );
 };
 

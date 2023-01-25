@@ -7,7 +7,8 @@ import MobileImages from './components/MobileImages';
 import DesktopImages from './components/DesktopImages';
 import NoPage from './components/NoPage';
 import { saveAs } from 'file-saver';
-// import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/400.css';
+import { Container } from '@mui/material';
 import './App.scss';
 
 type Image = {
@@ -46,58 +47,58 @@ function App() {
     setReloadJoke(!reloadJoke);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`https://api.pexels.com/v1/curated?per_page=${loadMore}`, {
-        method: 'GET',
-        headers: {
-          Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
-        },
-      });
-      const data: { photos: Image[] } = await response.json();
-      const photos = data.photos;
-      setHomeImages(photos);
-    };
-    fetchData();
-  }, [loadMore]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch(`https://api.pexels.com/v1/curated?per_page=${loadMore}`, {
+  //       method: 'GET',
+  //       headers: {
+  //         Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+  //       },
+  //     });
+  //     const data: { photos: Image[] } = await response.json();
+  //     const photos = data.photos;
+  //     setHomeImages(photos);
+  //   };
+  //   fetchData();
+  // }, [loadMore]);
 
-  useEffect(() => {
-    const mobileImg = 'mobile wallpaper';
-    const fetchData = async () => {
-      const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&per_page=${loadMore}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
-          },
-        }
-      );
-      const data: { photos: Image[] } = await response.json();
-      const photos = data.photos;
-      setMobileImages(photos);
-    };
-    fetchData();
-  }, [loadMore]);
+  // useEffect(() => {
+  //   const mobileImg = 'mobile wallpaper';
+  //   const fetchData = async () => {
+  //     const response = await fetch(
+  //       `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&per_page=${loadMore}`,
+  //       {
+  //         method: 'GET',
+  //         headers: {
+  //           Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+  //         },
+  //       }
+  //     );
+  //     const data: { photos: Image[] } = await response.json();
+  //     const photos = data.photos;
+  //     setMobileImages(photos);
+  //   };
+  //   fetchData();
+  // }, [loadMore]);
 
-  useEffect(() => {
-    const desktopImg = 'desktop backgrounds';
-    const fetchData = async () => {
-      const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&per_page=${loadMore}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
-          },
-        }
-      );
-      const data: { photos: Image[] } = await response.json();
-      const photos = data.photos;
-      setDesktopImages(photos);
-    };
-    fetchData();
-  }, [loadMore]);
+  // useEffect(() => {
+  //   const desktopImg = 'desktop backgrounds';
+  //   const fetchData = async () => {
+  //     const response = await fetch(
+  //       `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&per_page=${loadMore}`,
+  //       {
+  //         method: 'GET',
+  //         headers: {
+  //           Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+  //         },
+  //       }
+  //     );
+  //     const data: { photos: Image[] } = await response.json();
+  //     const photos = data.photos;
+  //     setDesktopImages(photos);
+  //   };
+  //   fetchData();
+  // }, [loadMore]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -109,9 +110,8 @@ function App() {
     fetchData();
   }, [reloadJoke]);
   return (
-    <div className="app-container">
+    <Container>
       <Nav />
-
       <Routes>
         <Route
           path="/"
@@ -152,7 +152,7 @@ function App() {
         <Route path="*" element={<NoPage />} />
       </Routes>
       <Footer />
-    </div>
+    </Container>
   );
 }
 
