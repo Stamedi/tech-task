@@ -8,6 +8,7 @@ const CardStyled = styled(Card)({
   alignItems: 'center',
   flexDirection: 'column',
   backgroundColor: '#574c4e',
+  maxWidth: '350px',
   transition: '0.3s',
   '&:hover': {
     boxShadow: '0px 4px 8px rgba(38, 38, 38, 0.2)',

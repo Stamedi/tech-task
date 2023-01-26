@@ -110,7 +110,7 @@ function App() {
     fetchData();
   }, [reloadJoke]);
   return (
-    <Container sx={{ padding: 0 }}>
+    <Container sx={{ padding: 0, position: 'relative' }}>
       <Nav />
       <Routes>
         <Route

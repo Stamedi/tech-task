@@ -25,7 +25,13 @@ const Nav = () => {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography display="flex" alignItems="center" justifyContent="center" variant="h6" sx={{ my: 2 }}>
+      <Typography
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        variant="h6"
+        sx={{ my: 2, color: '#eeefea' }}
+      >
         GET
         <PhotoSizeSelectActualOutlinedIcon style={{ height: 'auto' }} />
       </Typography>
@@ -36,7 +42,7 @@ const Nav = () => {
             <NavLink
               to={item.toLowerCase() === 'newest' ? '/' : `/${item.toLowerCase()}`}
               className="nav-link"
-              style={({ isActive }) => (isActive ? { color: '#cb9190' } : { color: '#574c4e' })}
+              style={({ isActive }) => (isActive ? { color: '#cb9190' } : { color: '#eeefea' })}
             >
               <Typography pr={1}>{item}</Typography> <PhotoSizeSelectActualOutlinedIcon />
             </NavLink>
@@ -65,7 +71,7 @@ const Nav = () => {
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex', alignItems: 'center' } }}
           >
             GET
-            <PhotoSizeSelectActualOutlinedIcon style={{ height: 'auto', width: '75px' }} />
+            <PhotoSizeSelectActualOutlinedIcon style={{ height: 'auto', width: '50px' }} />
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'flex', alignItems: 'center' } }}>
             {navItems.map((item) => (
@@ -92,7 +98,7 @@ const Nav = () => {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, background: '#574c4e' },
           }}
         >
           {drawer}
