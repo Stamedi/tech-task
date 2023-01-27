@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Grid, Button, styled, Box } from '@mui/material';
 import { AppContext } from '../App';
-import Photo from './Photo';
+import Image from './Image';
 
 const LoadMoreButton = styled(Button)({
   color: '#eeefea',
@@ -18,7 +18,7 @@ const LoadMoreButton = styled(Button)({
   },
 });
 
-export type PhotoType = {
+export type ImageType = {
   id: string;
   src: {
     original: string;
@@ -30,7 +30,7 @@ export type PhotoType = {
 };
 
 type ImagesType = {
-  images: PhotoType[];
+  images: ImageType[];
 };
 
 const Images = ({ images }: ImagesType) => {
@@ -47,8 +47,8 @@ const Images = ({ images }: ImagesType) => {
         mt={1}
         mb={4}
       >
-        {images.map((photo: PhotoType) => (
-          <Photo key={photo.id} photo={photo} />
+        {images.map((image: ImageType) => (
+          <Image key={image.id} image={image} />
         ))}
       </Grid>
       <LoadMoreButton onClick={() => handlePagination()}>Load More</LoadMoreButton>

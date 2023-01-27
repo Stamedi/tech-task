@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Grid, Card, CardMedia, CardContent, Typography, Link, Button, styled } from '@mui/material';
-
 import DownloadIcon from '@mui/icons-material/Download';
 import { AppContext } from '../App';
 
@@ -35,8 +34,8 @@ const DownloadButton = styled(Button)({
   },
 });
 
-type PhotoType = {
-  photo: {
+type ImageType = {
+  image: {
     id: string;
     src: {
       original: string;
@@ -48,7 +47,7 @@ type PhotoType = {
   };
 };
 
-const Photo = ({ photo }: PhotoType) => {
+const Image = ({ image }: ImageType) => {
   const context = useContext(AppContext);
   const { handleClick } = context;
   return (
@@ -56,8 +55,8 @@ const Photo = ({ photo }: PhotoType) => {
       <CardStyled>
         <CardMedia
           component="img"
-          image={photo.src.large}
-          alt={photo.alt}
+          image={image.src.large}
+          alt={image.alt}
           sx={{
             display: 'flex',
             flexGrow: 1,
@@ -68,14 +67,14 @@ const Photo = ({ photo }: PhotoType) => {
             Taken by{' '}
             <Link
               color="#ffe8e2"
-              href={photo.photographer_url}
+              href={image.photographer_url}
               sx={{ transition: '0.3s', '&:hover': { color: '#fefefe' } }}
             >
-              {photo.photographer}
+              {image.photographer}
             </Link>
           </Typography>
         </CardContent>
-        <DownloadButton onClick={() => handleClick(photo.src.original, photo.id)}>
+        <DownloadButton onClick={() => handleClick(image.src.original, image.id)}>
           <DownloadIcon />
         </DownloadButton>
       </CardStyled>
@@ -83,4 +82,4 @@ const Photo = ({ photo }: PhotoType) => {
   );
 };
 
-export default Photo;
+export default Image;
