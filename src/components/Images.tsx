@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Grid, Button, styled, Box } from '@mui/material';
 import { AppContext } from '../App';
 import Image from './Image';
