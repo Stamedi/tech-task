@@ -33,7 +33,7 @@ export type AppContextType = {
   mobileImages: Image[];
   desktopImages: Image[];
   handleClick: (url: string, id: string) => void;
-  handlePagination: () => void;
+  handleLoadMoreImg: () => void;
   joke: Joke;
   handleJokes: () => void;
 };
@@ -45,7 +45,7 @@ export const AppContext = createContext<AppContextType>({
   handleClick: () => {
     null;
   },
-  handlePagination: () => {
+  handleLoadMoreImg: () => {
     null;
   },
   joke: { setup: '', punchline: '' },
@@ -66,7 +66,7 @@ function App() {
     saveAs(url, id);
   };
 
-  const handlePagination = () => {
+  const handleLoadMoreImg = () => {
     setLoadMore(loadMore + 12);
   };
 
@@ -139,7 +139,7 @@ function App() {
     <Container sx={{ padding: 0, position: 'relative' }}>
       <ScrollToTop smooth component={<KeyboardArrowUpIcon style={{ color: '#7e9392' }} />} />
       <AppContext.Provider
-        value={{ homeImages, mobileImages, desktopImages, handleClick, handlePagination, joke, handleJokes }}
+        value={{ homeImages, mobileImages, desktopImages, handleClick, handleLoadMoreImg, joke, handleJokes }}
       >
         <Nav />
         <Routes>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Grid, Button, styled, Box } from '@mui/material';
 import { AppContext } from '../App';
 import Image from './Image';
@@ -35,7 +35,7 @@ type ImagesType = {
 
 const Images = ({ images }: ImagesType) => {
   const context = useContext(AppContext);
-  const { handlePagination } = context;
+  const { handleLoadMoreImg } = context;
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <Grid
@@ -51,7 +51,7 @@ const Images = ({ images }: ImagesType) => {
           <Image key={image.id} image={image} />
         ))}
       </Grid>
-      <LoadMoreButton onClick={() => handlePagination()}>Load More</LoadMoreButton>
+      <LoadMoreButton onClick={() => handleLoadMoreImg()}>Load More</LoadMoreButton>
     </Box>
   );
 };
