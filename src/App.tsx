@@ -9,6 +9,8 @@ import NoPage from './components/NoPage';
 import { saveAs } from 'file-saver';
 import '@fontsource/roboto/400.css';
 import { Container } from '@mui/material';
+import ScrollToTop from 'react-scroll-to-top';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 type Image = {
   id: string;
@@ -135,6 +137,7 @@ function App() {
   }, [reloadJoke]);
   return (
     <Container sx={{ padding: 0, position: 'relative' }}>
+      <ScrollToTop smooth component={<KeyboardArrowUpIcon style={{ color: '#7e9392' }} />} />
       <AppContext.Provider
         value={{ homeImages, mobileImages, desktopImages, handleClick, handlePagination, joke, handleJokes }}
       >
