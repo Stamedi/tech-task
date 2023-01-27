@@ -10,7 +10,13 @@ const MobileImages = () => {
   const { mobileImages } = context;
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <Typography component="h3" variant="h3" textAlign="center" pt={5}>
+      <Typography
+        component="h3"
+        variant="h3"
+        sx={{ fontSize: { xs: '34px', sm: '42px', fontWeight: '600' } }}
+        textAlign="center"
+        pt={5}
+      >
         Wallpapers for Mobile Devices
       </Typography>
       <Joke />

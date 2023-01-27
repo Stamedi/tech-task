@@ -63,7 +63,7 @@ const Image = ({ image }: ImageType) => {
           }}
         />
         <CardContent>
-          <Typography sx={{ padding: 0, color: '#eeefea' }} component="p" variant="h5">
+          <Typography sx={{ padding: 0, color: '#eeefea', fontSize: { xs: '20px' } }} component="p" variant="h5">
             Taken by{' '}
             <Link
               color="#ffe8e2"
