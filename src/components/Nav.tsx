@@ -39,6 +39,7 @@ const Nav = () => {
           <IconButton key={item}>
             <NavLink
               to={item.toLowerCase() === 'newest' ? '/' : `/${item.toLowerCase()}`}
+              className="nav-link"
               style={({ isActive }) => (isActive ? { color: '#cb9190' } : { color: '#eeefea' })}
             >
               <Typography pr={1}>{item}</Typography> <PhotoSizeSelectActualOutlinedIcon />
