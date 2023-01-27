@@ -3,8 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Typography, Box, styled, Drawer, Divider } from '@mui/material';
 import PhotoSizeSelectActualOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActualOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
-import '../styles/Nav.scss';
-
 const StyledToolbar = styled(Toolbar)({
   color: '#eeefea',
   padding: '15px',
@@ -17,7 +15,7 @@ const drawerWidth = 240;
 const navItems = ['Newest', 'Mobile', 'Desktop'];
 
 const Nav = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -41,7 +39,6 @@ const Nav = () => {
           <IconButton key={item}>
             <NavLink
               to={item.toLowerCase() === 'newest' ? '/' : `/${item.toLowerCase()}`}
-              className="nav-link"
               style={({ isActive }) => (isActive ? { color: '#cb9190' } : { color: '#eeefea' })}
             >
               <Typography pr={1}>{item}</Typography> <PhotoSizeSelectActualOutlinedIcon />
@@ -79,7 +76,7 @@ const Nav = () => {
                 <NavLink
                   to={item.toLowerCase() === 'newest' ? '/' : `/${item.toLowerCase()}`}
                   className="nav-link"
-                  style={({ isActive }) => (isActive ? { color: '#cb9190' } : undefined)}
+                  style={({ isActive }) => (isActive ? { color: '#cb9190' } : { color: '#eeefea' })}
                 >
                   <Typography pr={1}>{item}</Typography> <PhotoSizeSelectActualOutlinedIcon />
                 </NavLink>

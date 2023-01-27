@@ -1,6 +1,5 @@
 import React from 'react';
-import '../styles/Footer.scss';
-import { BottomNavigation, styled, IconButton, Box } from '@mui/material';
+import { styled, IconButton, Box } from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';

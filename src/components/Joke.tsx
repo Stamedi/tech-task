@@ -1,6 +1,6 @@
-/* eslint-disable react/no-unescaped-entities */
-import React from 'react';
+import React, { useContext } from 'react';
 import { Typography, Card, styled, Button } from '@mui/material';
+import { AppContext } from '../App';
 import ReplayIcon from '@mui/icons-material/Replay';
 
 const StyledCard = styled(Card)({
@@ -26,11 +26,14 @@ const StyledButton = styled(Button)({
   fontWeight: '600',
 });
 
-const Joke = ({ joke, handleJokes }: any) => {
+const Joke = () => {
+  const context = useContext(AppContext);
+
+  const { joke, handleJokes } = context;
   return (
     <StyledCard>
       <Typography variant="h4" component="h4">
-        Random jokes to "boost the day":
+        Random jokes to boost the day:
       </Typography>
       <Typography pt={3} variant="h6" component="h6">
         {joke.setup}

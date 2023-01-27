@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
@@ -9,10 +9,9 @@ import NoPage from './components/NoPage';
 import { saveAs } from 'file-saver';
 import '@fontsource/roboto/400.css';
 import { Container } from '@mui/material';
-import './App.scss';
 
 type Image = {
-  id: number;
+  id: string;
   src: {
     original: string;
     large: string;
@@ -26,6 +25,32 @@ type Joke = {
   setup: string;
   punchline: string;
 };
+
+export type AppContextType = {
+  homeImages: Image[];
+  mobileImages: Image[];
+  desktopImages: Image[];
+  handleClick: (url: string, id: string) => void;
+  handlePagination: () => void;
+  joke: Joke;
+  handleJokes: () => void;
+};
+
+export const AppContext = createContext<AppContextType>({
+  homeImages: [],
+  mobileImages: [],
+  desktopImages: [],
+  handleClick: () => {
+    null;
+  },
+  handlePagination: () => {
+    null;
+  },
+  joke: { setup: '', punchline: '' },
+  handleJokes: () => {
+    null;
+  },
+});
 
 function App() {
   const [homeImages, setHomeImages] = useState<Image[]>([]);
@@ -63,7 +88,7 @@ function App() {
   }, [loadMore]);
 
   useEffect(() => {
-    const mobileImg = 'mobile wallpaper';
+    const mobileImg = 'mobile wallpaper' as string;
     const fetchData = async () => {
       const response = await fetch(
         `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&per_page=${loadMore}`,
@@ -82,7 +107,7 @@ function App() {
   }, [loadMore]);
 
   useEffect(() => {
-    const desktopImg = 'desktop backgrounds';
+    const desktopImg = 'desktop backgrounds' as string;
     const fetchData = async () => {
       const response = await fetch(
         `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&per_page=${loadMore}`,
@@ -105,53 +130,23 @@ function App() {
       const response = await fetch('https://official-joke-api.appspot.com/random_joke');
       const data: Joke = await response.json();
       setJoke(data);
-      console.log(data);
     };
     fetchData();
   }, [reloadJoke]);
   return (
     <Container sx={{ padding: 0, position: 'relative' }}>
-      <Nav />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              homeImages={homeImages}
-              handleClick={handleClick}
-              handlePagination={handlePagination}
-              joke={joke}
-              handleJokes={handleJokes}
-            />
-          }
-        />
-        <Route
-          path="/mobile"
-          element={
-            <MobileImages
-              mobileImages={mobileImages}
-              handlePagination={handlePagination}
-              handleClick={handleClick}
-              joke={joke}
-              handleJokes={handleJokes}
-            />
-          }
-        />
-        <Route
-          path="/desktop"
-          element={
-            <DesktopImages
-              desktopImages={desktopImages}
-              handlePagination={handlePagination}
-              handleClick={handleClick}
-              joke={joke}
-              handleJokes={handleJokes}
-            />
-          }
-        />
-        <Route path="*" element={<NoPage />} />
-      </Routes>
-      <Footer />
+      <AppContext.Provider
+        value={{ homeImages, mobileImages, desktopImages, handleClick, handlePagination, joke, handleJokes }}
+      >
+        <Nav />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/mobile" element={<MobileImages />} />
+          <Route path="/desktop" element={<DesktopImages />} />
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+        <Footer />
+      </AppContext.Provider>
     </Container>
   );
 }
