@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Grid, Button, styled, Box } from '@mui/material';
+import { Grid, Button, styled, Box, Typography, Stack, Pagination } from '@mui/material';
 import { AppContext } from '../App';
 import Image from './Image';
 
@@ -34,8 +34,13 @@ type ImagesType = {
 };
 
 const Images = ({ images }: ImagesType) => {
+  // const getNum = (event: any) => {
+  //   console.log(event.target.textContent);
+  //   console.log(event.target);
+  // };
+
   const context = useContext(AppContext);
-  const { handleLoadMoreImg } = context;
+  const { handleLoadMoreImg, getPage } = context;
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <Grid
@@ -47,11 +52,23 @@ const Images = ({ images }: ImagesType) => {
         mt={1}
         mb={4}
       >
-        {images.map((image: ImageType) => (
-          <Image key={image.id} image={image} />
-        ))}
+        {images.length > 0 ? (
+          images.map((image: ImageType) => <Image key={image.id} image={image} />)
+        ) : (
+          <Typography variant="h2" component="h2" textAlign="center">
+            No results found
+          </Typography>
+        )}
       </Grid>
       <LoadMoreButton onClick={() => handleLoadMoreImg()}>Load More</LoadMoreButton>
+      <Pagination
+        onChange={getPage}
+        count={Math.floor(8000 / 9)}
+        variant="outlined"
+        shape="rounded"
+        hidePrevButton
+        hideNextButton
+      />
     </Box>
   );
 };
