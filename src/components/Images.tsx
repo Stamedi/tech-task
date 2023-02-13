@@ -1,22 +1,22 @@
 import React, { useContext } from 'react';
-import { Grid, Button, styled, Box, Typography, Stack, Pagination } from '@mui/material';
+import { Grid, Box, Typography, Pagination } from '@mui/material';
 import { AppContext } from '../App';
 import Image from './Image';
 
-const LoadMoreButton = styled(Button)({
-  color: '#eeefea',
-  backgroundColor: '#574c4e',
-  width: '80%',
-  borderRadius: '40px',
-  border: '2px solid #574c4e',
-  display: 'flex',
-  justifyContent: 'center',
-  alignSelf: 'center',
-  '&:hover': {
-    color: '#574c4e',
-    backgroundColor: '#eeefea',
-  },
-});
+// const LoadMoreButton = styled(Button)({
+//   color: '#eeefea',
+//   backgroundColor: '#574c4e',
+//   width: '80%',
+//   borderRadius: '40px',
+//   border: '2px solid #574c4e',
+//   display: 'flex',
+//   justifyContent: 'center',
+//   alignSelf: 'center',
+//   '&:hover': {
+//     color: '#574c4e',
+//     backgroundColor: '#eeefea',
+//   },
+// });
 
 export type ImageType = {
   id: string;
@@ -34,13 +34,8 @@ type ImagesType = {
 };
 
 const Images = ({ images }: ImagesType) => {
-  // const getNum = (event: any) => {
-  //   console.log(event.target.textContent);
-  //   console.log(event.target);
-  // };
-
   const context = useContext(AppContext);
-  const { handleLoadMoreImg, getPage } = context;
+  const { getPage } = context;
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <Grid
@@ -60,14 +55,15 @@ const Images = ({ images }: ImagesType) => {
           </Typography>
         )}
       </Grid>
-      <LoadMoreButton onClick={() => handleLoadMoreImg()}>Load More</LoadMoreButton>
+      {/* <LoadMoreButton onClick={() => handleLoadMoreImg()}>Load More</LoadMoreButton> */}
       <Pagination
-        onChange={getPage}
+        onChange={(event) => getPage(event)}
         count={Math.floor(8000 / 9)}
         variant="outlined"
         shape="rounded"
         hidePrevButton
         hideNextButton
+        sx={{ color: '#574c4e' }}
       />
     </Box>
   );

@@ -6,7 +6,7 @@ import { AppContext } from '../App';
 
 const DesktopImages = () => {
   const context = useContext(AppContext);
-
+  console.log(window.location.pathname);
   const { desktopImages } = context;
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">

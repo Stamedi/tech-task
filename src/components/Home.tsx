@@ -5,7 +5,6 @@ import { Typography, Box } from '@mui/material';
 import { AppContext } from '../App';
 const Home = () => {
   const context = useContext(AppContext);
-
   const { homeImages } = context;
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">

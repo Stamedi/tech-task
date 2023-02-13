@@ -29,6 +29,8 @@ type Joke = {
   punchline: string;
 };
 
+type Pagination = { home: number; mobile: number; desktop: number };
+
 export type AppContextType = {
   homeImages: Image[];
   mobileImages: Image[];
@@ -39,8 +41,10 @@ export type AppContextType = {
   handleJokes: () => void;
   searchImages: Image[];
   searchVal: { value: string; submitted: boolean };
-  handleSearchVal: (value: string, event: any) => void;
+  handleSearchVal: (value: string, event: React.FormEvent) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getPage: (event: any) => void;
+  currentPage: Pagination;
 };
 
 export const AppContext = createContext<AppContextType>({
@@ -65,6 +69,7 @@ export const AppContext = createContext<AppContextType>({
   getPage: () => {
     null;
   },
+  currentPage: { home: 1, mobile: 1, desktop: 1 },
 });
 
 function App() {
@@ -76,7 +81,7 @@ function App() {
   const [joke, setJoke] = useState<Joke>({ setup: '', punchline: '' });
   const [reloadJoke, setReloadJoke] = useState<boolean>(false);
   const [loadMore, setLoadMore] = useState<number>(9);
-  const [currentPage, setCurrentPage] = useState({ home: 1, mobile: 1, desktop: 1 });
+  const [currentPage, setCurrentPage] = useState<Pagination>({ home: 1, mobile: 1, desktop: 1 });
   const [searchVal, setSearchVal] = useState<{ value: string; submitted: boolean }>({ value: '', submitted: false });
 
   const handleClick = (url: string, id: string) => {
@@ -91,15 +96,17 @@ function App() {
     setReloadJoke(!reloadJoke);
   };
 
-  const handleSearchVal = (value: string, event: any) => {
+  const handleSearchVal = (value: string, event: React.FormEvent) => {
     event.preventDefault();
     setSearchVal({ ...searchVal, value, submitted: !searchVal.submitted });
   };
-  // console.log(currentPage);
 
-  const getPage = (event: any) => {
-    const pageNumber = parseInt(event.target.textContent);
-    setCurrentPage({ ...currentPage, home: pageNumber });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getPage = (event: any): void => {
+    const pageNumber = event.currentTarget.textContent;
+    const currentPath = window.location.pathname.slice(1);
+    const paginationKey = currentPath === '' ? 'home' : currentPath;
+    setCurrentPage({ ...currentPage, [paginationKey]: pageNumber });
   };
 
   useEffect(() => {
@@ -113,8 +120,7 @@ function App() {
       const data: { photos: Image[] } = await response.json();
       console.log(data);
       const photos = data.photos;
-      const sortedPhotos = photos.sort((a, b) => Number(b.id) - Number(a.id));
-      setHomeImages(sortedPhotos);
+      setHomeImages(photos);
     };
     fetchData();
   }, [loadMore, currentPage.home]);
@@ -123,7 +129,9 @@ function App() {
     const mobileImg = 'mobile wallpaper' as string;
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&page=${currentPage.mobile}&per_page=${loadMore}`,
+        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&page=${
+          currentPage.mobile
+        }&per_page=${9}`,
         {
           method: 'GET',
           headers: {
@@ -136,13 +144,15 @@ function App() {
       setMobileImages(photos);
     };
     fetchData();
-  }, [loadMore]);
+  }, [loadMore, currentPage.mobile]);
 
   useEffect(() => {
     const desktopImg = 'desktop backgrounds' as string;
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&page=${currentPage.desktop}&per_page=${loadMore}`,
+        `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&page=${
+          currentPage.desktop
+        }&per_page=${9}`,
         {
           method: 'GET',
           headers: {
@@ -155,7 +165,7 @@ function App() {
       setDesktopImages(photos);
     };
     fetchData();
-  }, [loadMore]);
+  }, [loadMore, currentPage.desktop]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -206,6 +216,7 @@ function App() {
           searchVal,
           handleSearchVal,
           getPage,
+          currentPage,
         }}
       >
         <Nav />
