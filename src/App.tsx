@@ -82,7 +82,7 @@ function App() {
   const [reloadJoke, setReloadJoke] = useState<boolean>(false);
   const [loadMore, setLoadMore] = useState<number>(9);
   const [currentPage, setCurrentPage] = useState<Pagination>({ home: 1, mobile: 1, desktop: 1, search: 1 });
-  const [currentColor, setCurrentColor] = useState({ mobile: '', desktop: '', search: '' });
+  // const [currentColor, setCurrentColor] = useState({ mobile: '', desktop: '', search: '' });
   const [searchVal, setSearchVal] = useState<{ value: string; submitted: boolean }>({ value: '', submitted: false });
   const photosPerPage = 9;
 
@@ -134,7 +134,7 @@ function App() {
     const mobileImg = 'mobile wallpaper' as string;
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&page=${currentPage.mobile}&per_page=${photosPerPage}`,
+        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&page=${currentPage.mobile}&per_page=${photosPerPage}&`,
         {
           method: 'GET',
           headers: {
