@@ -29,7 +29,7 @@ type Joke = {
   punchline: string;
 };
 
-type Pagination = { home: number; mobile: number; desktop: number };
+type Pagination = { home: number; mobile: number; desktop: number; search: number };
 
 export type AppContextType = {
   homeImages: Image[];
@@ -69,7 +69,7 @@ export const AppContext = createContext<AppContextType>({
   getPage: () => {
     null;
   },
-  currentPage: { home: 1, mobile: 1, desktop: 1 },
+  currentPage: { home: 1, mobile: 1, desktop: 1, search: 1 },
 });
 
 function App() {
@@ -81,8 +81,10 @@ function App() {
   const [joke, setJoke] = useState<Joke>({ setup: '', punchline: '' });
   const [reloadJoke, setReloadJoke] = useState<boolean>(false);
   const [loadMore, setLoadMore] = useState<number>(9);
-  const [currentPage, setCurrentPage] = useState<Pagination>({ home: 1, mobile: 1, desktop: 1 });
+  const [currentPage, setCurrentPage] = useState<Pagination>({ home: 1, mobile: 1, desktop: 1, search: 1 });
+  const [currentColor, setCurrentColor] = useState({ mobile: '', desktop: '', search: '' });
   const [searchVal, setSearchVal] = useState<{ value: string; submitted: boolean }>({ value: '', submitted: false });
+  const photosPerPage = 9;
 
   const handleClick = (url: string, id: string) => {
     saveAs(url, id);
@@ -111,12 +113,15 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://api.pexels.com/v1/curated?page=${currentPage.home}&per_page=${9}`, {
-        method: 'GET',
-        headers: {
-          Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
-        },
-      });
+      const response = await fetch(
+        `https://api.pexels.com/v1/curated?page=${currentPage.home}&per_page=${photosPerPage}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `${process.env.REACT_APP_API_KEY}`,
+          },
+        }
+      );
       const data: { photos: Image[] } = await response.json();
       console.log(data);
       const photos = data.photos;
@@ -129,13 +134,11 @@ function App() {
     const mobileImg = 'mobile wallpaper' as string;
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&page=${
-          currentPage.mobile
-        }&per_page=${9}`,
+        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&page=${currentPage.mobile}&per_page=${photosPerPage}`,
         {
           method: 'GET',
           headers: {
-            Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+            Authorization: `${process.env.REACT_APP_API_KEY}`,
           },
         }
       );
@@ -150,13 +153,11 @@ function App() {
     const desktopImg = 'desktop backgrounds' as string;
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&page=${
-          currentPage.desktop
-        }&per_page=${9}`,
+        `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&page=${currentPage.desktop}&per_page=${photosPerPage}&color=gray`,
         {
           method: 'GET',
           headers: {
-            Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+            Authorization: `${process.env.REACT_APP_API_KEY}`,
           },
         }
       );
@@ -170,11 +171,11 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${searchVal.value}&orientation=square&page=${currentPage}&per_page=${loadMore}`,
+        `https://api.pexels.com/v1/search?query=${searchVal.value}&orientation=square&page=${currentPage.search}&per_page=${photosPerPage}`,
         {
           method: 'GET',
           headers: {
-            Authorization: '563492ad6f91700001000001c64cbcea7fea470aa20457c80ea7e40e',
+            Authorization: `${process.env.REACT_APP_API_KEY}`,
           },
         }
       );
@@ -190,7 +191,7 @@ function App() {
     } else {
       setSearchImages([]);
     }
-  }, [loadMore, searchVal.submitted]);
+  }, [loadMore, searchVal.submitted, currentPage.search]);
 
   useEffect(() => {
     const fetchData = async () => {

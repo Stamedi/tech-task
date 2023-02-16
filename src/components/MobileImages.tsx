@@ -6,7 +6,6 @@ import { AppContext } from '../App';
 
 const MobileImages = () => {
   const context = useContext(AppContext);
-  console.log(window.location.pathname);
   const { mobileImages } = context;
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
