@@ -17,7 +17,7 @@ const SearchImages = () => {
         textAlign="center"
         pt={5}
       >
-        Wallpapers for Mobile Devices
+        Search Wallpapers
       </Typography>
       <Joke />
       <Images images={searchImages} />
