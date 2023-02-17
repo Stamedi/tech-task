@@ -134,7 +134,7 @@ function App() {
     const mobileImg = 'mobile wallpaper' as string;
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&page=${currentPage.mobile}&per_page=${photosPerPage}&`,
+        `https://api.pexels.com/v1/search?query=${mobileImg}&orientation=portrait&page=${currentPage.mobile}&per_page=${photosPerPage}`,
         {
           method: 'GET',
           headers: {
@@ -153,7 +153,7 @@ function App() {
     const desktopImg = 'desktop backgrounds' as string;
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&page=${currentPage.desktop}&per_page=${photosPerPage}&color=gray`,
+        `https://api.pexels.com/v1/search?query=${desktopImg}&orientation=landscape&page=${currentPage.desktop}&per_page=${photosPerPage}`,
         {
           method: 'GET',
           headers: {

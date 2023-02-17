@@ -35,7 +35,7 @@ type ImagesType = {
 
 const Images = ({ images }: ImagesType) => {
   const context = useContext(AppContext);
-  const { getPage } = context;
+  const { getPage, currentPage } = context;
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <Grid
