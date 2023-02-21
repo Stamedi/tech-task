@@ -19,6 +19,7 @@ const Home = () => {
       <Typography component="h5" variant="h5" sx={{ fontSize: { xs: '22px' } }} pt={3} textAlign="center">
         On this website you can download any wallpaper that you like or if you are curious who made the wallpaper you
         can go to the artist page and check out their other wallpapers/images.
+        <br /> P.S. There are no filters for newest wallpapers
       </Typography>
       <Joke />
       <Images images={homeImages} />
