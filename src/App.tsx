@@ -50,9 +50,11 @@ export type AppContextType = {
   handleSearchVal: (value: string, event: React.FormEvent) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getPage: (event: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleColorFilter: (colorVal: string, event: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleOrientationFilter: (event: any) => void;
-  imagesResult: Pagination;
+  // imagesResult: Pagination;
 };
 
 export const AppContext = createContext<AppContextType>({
@@ -82,7 +84,7 @@ export const AppContext = createContext<AppContextType>({
   handleOrientationFilter: () => {
     null;
   },
-  imagesResult: { home: 0, mobile: 0, desktop: 0, search: 0 },
+  // imagesResult: { home: 0, mobile: 0, desktop: 0, search: 0 },
 });
 
 function App() {
@@ -95,7 +97,7 @@ function App() {
   const [reloadJoke, setReloadJoke] = useState<boolean>(false);
   const [loadMore, setLoadMore] = useState<number>(9);
   const [currentPage, setCurrentPage] = useState<Pagination>({ home: 1, mobile: 1, desktop: 1, search: 1 });
-  const [imagesResult, setImagesResult] = useState<Pagination>({ home: 0, mobile: 0, desktop: 0, search: 0 });
+  // const [imagesResult, setImagesResult] = useState<Pagination>({ home: 0, mobile: 0, desktop: 0, search: 0 });
   const [currentColor, setCurrentColor] = useState<Colors>({ mobile: '', desktop: '', search: '' });
   const [orientationVal, setOrientationVal] = useState<string>('');
   const [searchVal, setSearchVal] = useState<{ value: string; submitted: boolean }>({ value: '', submitted: false });
@@ -132,6 +134,7 @@ function App() {
     setCurrentColor({ ...currentColor, [colorsFilterKey]: colorVal });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleOrientationFilter = (event: any) => {
     setOrientationVal(event.target.value);
     console.log(event.target.value);
@@ -192,11 +195,9 @@ function App() {
       const data: { photos: Image[]; total_results: number } = await response.json();
       const photos = data.photos;
       setDesktopImages({ images: photos, imagesAmount: data.total_results });
-      // setImagesResult({ ...imagesResult, desktop: data.total_results });
     };
     fetchData();
-  }, [loadMore, currentPage.desktop, currentColor.desktop, imagesResult.desktop]);
-  console.log(imagesResult);
+  }, [loadMore, currentPage.desktop, currentColor.desktop]);
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -211,7 +212,6 @@ function App() {
       const data: { photos: Image[]; total_results: number } = await response.json();
       const photos = data.photos;
       setSearchImages({ images: photos, imagesAmount: data.total_results });
-      // setImagesResult({ ...imagesResult, search: data.total_results });
       if (photos) {
         navigate('/search');
       }
@@ -221,7 +221,7 @@ function App() {
     } else {
       setSearchImages({ images: [], imagesAmount: 0 });
     }
-  }, [loadMore, searchVal.submitted, currentPage.search, currentColor.search, orientationVal, imagesResult.search]);
+  }, [loadMore, searchVal.submitted, currentPage.search, currentColor.search, orientationVal]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -248,7 +248,6 @@ function App() {
           getPage,
           handleColorFilter,
           handleOrientationFilter,
-          imagesResult,
         }}
       >
         <Nav />

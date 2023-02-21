@@ -18,6 +18,7 @@ const Filters = () => {
   const context = useContext(AppContext);
   const { handleColorFilter, handleOrientationFilter } = context;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleReset = (event: any) => {
     const colorFilterResetVal = '';
     handleColorFilter(colorFilterResetVal, event);
