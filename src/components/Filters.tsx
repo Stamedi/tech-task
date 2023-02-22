@@ -18,8 +18,7 @@ const Filters = () => {
   const context = useContext(AppContext);
   const { handleColorFilter, handleOrientationFilter } = context;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleReset = (event: any) => {
+  const handleReset = (event: React.MouseEvent<HTMLButtonElement>) => {
     const colorFilterResetVal = '';
     handleColorFilter(colorFilterResetVal, event);
     setColorVal(colorFilterResetVal);
@@ -46,7 +45,7 @@ const Filters = () => {
                 onChange={(event) => setColorVal(event.target.value)}
               />
               {colorVal.length !== 0 && (
-                <IconButton sx={{ mt: 1 }} onClick={handleReset}>
+                <IconButton sx={{ mt: 1 }} onClick={(event) => handleReset(event)}>
                   <ReplayIcon />
                 </IconButton>
               )}

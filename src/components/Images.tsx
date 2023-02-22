@@ -25,7 +25,6 @@ type ImagesType = {
 const Images = ({ images }: ImagesType) => {
   const context = useContext(AppContext);
   const { getPage } = context;
-  console.log(images);
   return (
     <Container>
       <Filters />
@@ -48,7 +47,7 @@ const Images = ({ images }: ImagesType) => {
           )}
         </Grid>
         <Pagination
-          onChange={(event) => getPage(event)}
+          onChange={getPage}
           count={Math.floor(images.imagesAmount / 9)}
           variant="outlined"
           shape="rounded"

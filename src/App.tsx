@@ -9,7 +9,7 @@ import SearchImages from './components/SearchImages';
 import NoPage from './components/NoPage';
 import { saveAs } from 'file-saver';
 import '@fontsource/roboto/400.css';
-import { Container } from '@mui/material';
+import { Container, SelectChangeEvent } from '@mui/material';
 import ScrollToTop from 'react-scroll-to-top';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
@@ -48,13 +48,9 @@ export type AppContextType = {
   handleJokes: () => void;
   searchImages: ImageState;
   handleSearchVal: (value: string, event: React.FormEvent) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getPage: (event: any) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  handleColorFilter: (colorVal: string, event: any) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  handleOrientationFilter: (event: any) => void;
-  // imagesResult: Pagination;
+  getPage: (event: React.ChangeEvent<unknown>, page: number) => void;
+  handleColorFilter: (colorVal: string, event: React.FormEvent) => void;
+  handleOrientationFilter: (event: SelectChangeEvent<string>) => void;
 };
 
 export const AppContext = createContext<AppContextType>({
@@ -84,7 +80,6 @@ export const AppContext = createContext<AppContextType>({
   handleOrientationFilter: () => {
     null;
   },
-  // imagesResult: { home: 0, mobile: 0, desktop: 0, search: 0 },
 });
 
 function App() {
@@ -97,7 +92,6 @@ function App() {
   const [reloadJoke, setReloadJoke] = useState<boolean>(false);
   const [loadMore, setLoadMore] = useState<number>(9);
   const [currentPage, setCurrentPage] = useState<Pagination>({ home: 1, mobile: 1, desktop: 1, search: 1 });
-  // const [imagesResult, setImagesResult] = useState<Pagination>({ home: 0, mobile: 0, desktop: 0, search: 0 });
   const [currentColor, setCurrentColor] = useState<Colors>({ mobile: '', desktop: '', search: '' });
   const [orientationVal, setOrientationVal] = useState<string>('');
   const [searchVal, setSearchVal] = useState<{ value: string; submitted: boolean }>({ value: '', submitted: false });
@@ -120,12 +114,10 @@ function App() {
     setSearchVal({ ...searchVal, value, submitted: !searchVal.submitted });
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const getPage = (event: any) => {
-    const pageNumber = event.currentTarget.textContent;
+  const getPage = (event: React.ChangeEvent<unknown>, page: number): void => {
     const currentPath = window.location.pathname.slice(1);
     const paginationKey = currentPath === '' ? 'home' : currentPath;
-    setCurrentPage({ ...currentPage, [paginationKey]: pageNumber });
+    setCurrentPage({ ...currentPage, [paginationKey]: page });
   };
 
   const handleColorFilter = (colorVal: string, event: React.FormEvent) => {
@@ -134,10 +126,8 @@ function App() {
     setCurrentColor({ ...currentColor, [colorsFilterKey]: colorVal });
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleOrientationFilter = (event: any) => {
+  const handleOrientationFilter = (event: SelectChangeEvent<string>) => {
     setOrientationVal(event.target.value);
-    console.log(event.target.value);
   };
 
   useEffect(() => {
@@ -153,9 +143,7 @@ function App() {
       );
       const data: { photos: Image[]; total_results: number } = await response.json();
       const photos = data.photos;
-      console.log(data);
       setHomeImages({ images: photos, imagesAmount: data.total_results });
-      // setImagesResult({ ...imagesResult, home: data.total_results });
     };
     fetchData();
   }, [loadMore, currentPage.home]);
@@ -175,7 +163,6 @@ function App() {
       const data: { photos: Image[]; total_results: number } = await response.json();
       const photos = data.photos;
       setMobileImages({ images: photos, imagesAmount: data.total_results });
-      // setImagesResult({ ...imagesResult, mobile: data.total_results });
     };
     fetchData();
   }, [loadMore, currentPage.mobile, currentColor.mobile]);
@@ -198,10 +185,11 @@ function App() {
     };
     fetchData();
   }, [loadMore, currentPage.desktop, currentColor.desktop]);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.pexels.com/v1/search?query=${searchVal.value}&orientation=square&page=${currentPage.search}&per_page=${photosPerPage}&color=${currentColor.search}&orientation=${orientationVal}`,
+        `https://api.pexels.com/v1/search?query=${searchVal.value}&orientation=${orientationVal}&page=${currentPage.search}&per_page=${photosPerPage}&color=${currentColor.search}`,
         {
           method: 'GET',
           headers: {
